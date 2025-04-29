@@ -41,4 +41,7 @@
   .items {
     @apply hover:bg-gray-50;
   }
+  .section-padding {
+    @apply py-24 md:py-24;
+  }
 }

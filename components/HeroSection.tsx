@@ -27,8 +27,8 @@ const Hero = () => {
           </div>
 
           {/* Right column: Image */}
-          <div className="relative h-full min-h-[300px] md:min-h-[400px]">
-            <div className="w-full h-full bg-[url('/MHPA.jpg')] bg-cover bg-center bg-no-repeat rounded-lg shadow-lg"></div>
+          <div className="relative h-full min-h-[300px] md:min-h-[480px]">
+            <div className="w-full h-full bg-[url('/logo.png')] bg-cover bg-center bg-no-repeat rounded-lg shadow-lg"></div>
           </div>
         </div>
       </div>
