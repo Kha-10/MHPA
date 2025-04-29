@@ -1,26 +1,44 @@
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import "tw-animate-css";
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Map the Next.js variables to Tailwind tokens */
+  --font-sans: var(--font-montserrat);
+  --font-mono: var(--font-open-sans);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    @apply font-sans bg-white;
+  }
+  input {
+    @apply border-2 border-red-500;
+  }
+  input:focus {
+    @apply ring ring-red-500;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .btn-primary {
+    @apply bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-md transition-colors duration-300 font-medium;
+  }
+
+  .btn-secondary {
+    @apply bg-white hover:bg-red-50 text-red-600 border border-red-600 px-6 py-3 rounded-md transition-colors duration-300 font-medium;
+  }
+
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+
+  .container-custom {
+    @apply container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
+  }
+  .select {
+    @apply border-2 border-red-500 bg-white;
+  }
+  .items {
+    @apply hover:bg-gray-50;
+  }
 }
