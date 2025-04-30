@@ -40,7 +40,7 @@ const AboutUs = () => {
   }, []);
 
   return (
-    <section id="about" ref={sectionRef} className="section-padding bg-white">
+    <section id="about" ref={sectionRef} className="section-padding bg-white scroll-mt-[300px]">
       <div className="container-custom">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 animate-on-scroll opacity-0">About Us</h2>

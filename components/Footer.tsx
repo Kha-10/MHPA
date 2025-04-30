@@ -71,11 +71,6 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-red-400 transition-colors">
-                  Donate
-                </a>
-              </li>
-              <li>
                 <a href="#contact" className="text-gray-400 hover:text-red-400 transition-colors">
                   Contact Us
                 </a>

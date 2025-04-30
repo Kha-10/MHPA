@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat, Open_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import { DonationModalProvider } from "@/context/DonationModalContext";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -28,8 +29,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${montserrat.variable} ${openSans.variable}`}>
-        <Navbar />
-        {children}
+        <DonationModalProvider>
+          <Navbar />
+          {children}
+        </DonationModalProvider>
       </body>
     </html>
   );

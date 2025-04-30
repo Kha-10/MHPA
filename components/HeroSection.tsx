@@ -1,10 +1,18 @@
+"use client";
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { SecondaryDonateButton } from "./DonateButton";
 
 const Hero = () => {
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
-    <div className="bg-gradient-to-r from-red-50 to-white relative">
+    <div className="bg-gradient-to-r from-red-50 to-white relative section-padding scroll-mt-[300px]">
       <div className="container-custom py-20 md:py-32">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           {/* Left column: Text content */}
@@ -18,11 +26,16 @@ const Hero = () => {
               for those in need. Every volunteer makes a difference.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Button className="btn-primary">Join Us Today</Button>
-              <Button className="btn-secondary group">
-                Donate Now
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              <Button
+                className="btn-primary"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection("getinvolved");
+                }}
+              >
+                Join Us Today
               </Button>
+              <SecondaryDonateButton />
             </div>
           </div>
 

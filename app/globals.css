@@ -42,7 +42,7 @@
     @apply hover:bg-gray-50;
   }
   .section-padding {
-    @apply py-24 md:py-24;
+    @apply py-16 md:py-24;
   }
   .animate-fade-in {
     animation: fadeIn 0.8s ease forwards;
