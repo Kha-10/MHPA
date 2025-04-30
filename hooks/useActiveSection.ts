@@ -1,20 +1,21 @@
-'use client'
-import { useState, useEffect } from 'react';
+"use client";
+import { useState, useEffect } from "react";
 
-type Section = 'about' | 'work' | 'getinvolved' | 'contact';
+type Section = "about" | "work" | "getinvolved" | "contact";
 
 export const useActiveSection = () => {
   const [activeSection, setActiveSection] = useState<Section | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = document.querySelectorAll('section[id]');
+      const sections = document.querySelectorAll("section[id]");
       const scrollPosition = window.scrollY + 100;
 
       sections.forEach((section) => {
-        const sectionId = section.getAttribute('id') as Section;
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.offsetHeight;
+        const el = section as HTMLElement;
+        const sectionId = el.getAttribute("id") as Section;
+        const sectionTop = el.offsetTop;
+        const sectionHeight = el.offsetHeight;
 
         if (
           scrollPosition >= sectionTop &&
@@ -25,12 +26,13 @@ export const useActiveSection = () => {
       });
     };
 
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Check on mount
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   return activeSection;
+};
