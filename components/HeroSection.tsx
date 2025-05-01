@@ -12,7 +12,7 @@ const Hero = () => {
   };
 
   return (
-    <div className="bg-gradient-to-r from-red-50 to-white relative section-padding scroll-mt-[300px]">
+    <div className="bg-gradient-to-r from-red-50 to-white relative">
       <div className="container-custom py-20 md:py-32">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           {/* Left column: Text content */}

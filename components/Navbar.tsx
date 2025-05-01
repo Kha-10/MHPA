@@ -1,216 +1,112 @@
 "use client";
-import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { useActiveSection } from "../hooks/useActiveSection";
+
+import Link from "next/link";
+import { Search, Menu } from "lucide-react";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import MobileMenu from "./MobileMenu";
 import { PrimaryDonateButton } from "./DonateButton";
 
-const Navbar: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const activeSection = useActiveSection();
+export default function Navbar() {
+  const [selectedNav, setSelectedNav] = useState<string | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      setIsMenuOpen(false);
-    }
-  };
-
-  const getLinkClass = (sectionId: string) => {
-    const baseClass = "transition-colors duration-300";
-    const normalClass = "text-gray-700 hover:text-red-600";
-    const activeClass =
-      "text-red-600 font-semibold relative after:content-[''] after:absolute after:left-0 after:bottom-[-5px] after:w-full after:h-[2px] after:bg-red-600";
-
-    return `${baseClass} ${
-      activeSection === sectionId ? activeClass : normalClass
-    }`;
-  };
-
-  const getMobileLinkClass = (sectionId: string) => {
-    const baseClass =
-      "block px-3 py-2 rounded-md text-base font-medium hover:bg-red-50";
-    const normalClass = "text-gray-700 hover:text-red-600";
-    const activeClass = "text-red-600 font-semibold bg-red-50";
-
-    return `${baseClass} ${
-      activeSection === sectionId ? activeClass : normalClass
-    }`;
-  };
-
-  const resetActiveSection = () => {
-    // Scroll to top of page
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    // Close mobile menu if open
-    setIsMenuOpen(false);
-  };
+  // Animated hamburger menu icon
+  const MenuIcon = () => (
+    <button
+      aria-label="Menu"
+      className="p-1 relative z-50"
+      onClick={() => setMenuOpen(true)}
+    >
+      <motion.div
+        initial={{ rotate: 0 }}
+        animate={{ rotate: menuOpen ? 90 : 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        <Menu className="h-6 w-6 text-red-500" />
+      </motion.div>
+    </button>
+  );
 
   return (
-    <nav className="bg-white sticky top-0 z-50 shadow-sm">
-      <div className="container-custom">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <div className="flex-shrink-0">
-            <a
-              href="#"
+    <>
+      <header className="bg-white sticky top-0 z-50 shadow-sm">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center">
+            <Link
+              href="/"
               className="flex items-center"
-              onClick={(e) => {
-                e.preventDefault();
-                resetActiveSection();
-              }}
             >
-              <span className="text-red-600 font-bold text-2xl font-heading">
+              <div className="text-red-500 font-bold text-lg">
+                {/* <svg viewBox="0 0 100 100" className="h-full w-full">
+                  <polygon
+                    points="50,0 100,30 100,70 50,100 0,70 0,30"
+                    fill="#6b21a8"
+                  />
+                  <polygon points="30,30 70,30 70,70 30,70" fill="#ea580c" />
+                </svg> */}
                 MHPA
-              </span>
-            </a>
+              </div>
+              {/* <div>
+                <div className="text-purple-900 font-bold text-lg leading-tight">
+                  INTERNATIONAL
+                  <br />
+                  CANCER FOUNDATION
+                </div>
+                <div className="text-sm text-gray-700">
+                  Bridging the global divide in cancer care
+                </div>
+              </div> */}
+            </Link>
           </div>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:block">
-            <div className="flex items-center space-x-8">
-              <a
-                href="#about"
-                className={getLinkClass("about")}
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToSection("about");
-                }}
-              >
-                About Us
-              </a>
-              <a
-                href="#work"
-                className={getLinkClass("work")}
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToSection("work");
-                }}
-              >
-                Our Work
-              </a>
-              <a
-                href="#getinvolved"
-                className={getLinkClass("getinvolved")}
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToSection("getinvolved");
-                }}
-              >
-                Get Involved
-              </a>
-              <a
-                href="#contact"
-                className={getLinkClass("contact")}
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToSection("contact");
-                }}
-              >
-                Contact
-              </a>
+          <div className="hidden md:flex items-center space-x-6">
+            <nav className="flex items-center space-x-6">
+              {[
+                { name: "About Us", href: "/about-us" },
+                { name: "Our Work", href: "/our-work" },
+                { name: "Get Involved", href: "/get-involved" },
+                { name: "Contact Us", href: "/contact-us" },
+              ].map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`text-black hover:border-b-2 hover:text-red-500 hover:pb-1 transition-all ${
+                    selectedNav === item.name
+                      ? "border-b-2 border-red-500 pb-1"
+                      : ""
+                  }`}
+                  onClick={() => setSelectedNav(item.name)}
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </nav>
+
+            <div className="flex items-center space-x-2">
               <PrimaryDonateButton primary="primary" />
+            </div>
+
+            <div className="flex items-center space-x-4">
+              {/* <button aria-label="Search" className="p-1">
+                <Search className="h-6 w-6" />
+              </button> */}
+              <MenuIcon />
             </div>
           </div>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden flex items-center">
-            <button
-              onClick={toggleMenu}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-red-600 focus:outline-none"
-              aria-expanded="false"
-            >
-              <span className="sr-only">Open main menu</span>
-              {/* Icon when menu is closed */}
-              <svg
-                className={`${isMenuOpen ? "hidden" : "block"} h-6 w-6`}
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-              {/* Icon when menu is open */}
-              <svg
-                className={`${isMenuOpen ? "block" : "hidden"} h-6 w-6`}
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
+          <div className="flex md:hidden items-center space-x-4">
+            {/* <button aria-label="Search" className="p-1">
+              <Search className="h-6 w-6" />
+            </button> */}
+            <MenuIcon />
           </div>
         </div>
-      </div>
+      </header>
 
       {/* Mobile Menu */}
-      <div className={`${isMenuOpen ? "block" : "hidden"} md:hidden`}>
-        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t">
-          <a
-            href="#about"
-            className={getMobileLinkClass("about")}
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection("about");
-            }}
-          >
-            About Us
-          </a>
-          <a
-            href="#work"
-            className={getMobileLinkClass("work")}
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection("work");
-            }}
-          >
-            Our Work
-          </a>
-          <a
-            href="#getinvolved"
-            className={getMobileLinkClass("getinvolved")}
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection("getinvolved");
-            }}
-          >
-            Get Involved
-          </a>
-          <a
-            href="#contact"
-            className={getMobileLinkClass("contact")}
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection("contact");
-            }}
-          >
-            Contact
-          </a>
-          <div className="mt-4 px-3">
-            <Button className="btn-primary w-full">Donate Now</Button>
-          </div>
-        </div>
-      </div>
-    </nav>
+      <MobileMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
+    </>
   );
-};
-
-export default Navbar;
+}

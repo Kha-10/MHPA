@@ -11,11 +11,16 @@ export const useActiveSection = () => {
       const sections = document.querySelectorAll("section[id]");
       const scrollPosition = window.scrollY + 100;
 
+      // Check if we're at the very top of the page
+      if (scrollPosition <= 100) {
+        setActiveSection(null);
+        return;
+      }
+
       sections.forEach((section) => {
-        const el = section as HTMLElement;
-        const sectionId = el.getAttribute("id") as Section;
-        const sectionTop = el.offsetTop;
-        const sectionHeight = el.offsetHeight;
+        const sectionId = section.getAttribute("id") as Section;
+        const sectionTop = (section as HTMLElement).offsetTop;
+        const sectionHeight = (section as HTMLElement).offsetHeight;
 
         if (
           scrollPosition >= sectionTop &&
@@ -27,7 +32,7 @@ export const useActiveSection = () => {
     };
 
     window.addEventListener("scroll", handleScroll);
-    handleScroll();
+    handleScroll(); // Check on mount
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
