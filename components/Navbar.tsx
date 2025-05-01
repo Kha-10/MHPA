@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Search, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import MobileMenu from "./MobileMenu";

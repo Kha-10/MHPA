@@ -38,8 +38,8 @@ export default function BubbleBackground({ className }: BubbleProps) {
       color: string
 
       constructor() {
-        this.x = Math.random() * canvas.width
-        this.y = Math.random() * canvas.height
+        this.x = Math.random() * (canvas?.width ?? 0)
+        this.y = Math.random() * (canvas?.height ?? 0)
         this.radius = Math.random() * 80 + 20
         this.speedX = (Math.random() - 0.5) * 0.5
         this.speedY = (Math.random() - 0.5) * 0.5
@@ -54,8 +54,8 @@ export default function BubbleBackground({ className }: BubbleProps) {
         this.y += this.speedY
 
         // Bounce off edges
-        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1
-        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1
+        if (this.x < 0 || this.x > (canvas?.width ?? 0)) this.speedX *= -1
+        if (this.y < 0 || this.y > (canvas?.height ?? 0)) this.speedY *= -1
       }
 
       draw() {
